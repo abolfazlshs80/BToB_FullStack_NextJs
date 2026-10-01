@@ -1,7 +1,6 @@
 import Link from "next/link";
-import "./globals.css";
 
-export default function RootLayout({
+export default function AdminLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -10,7 +9,7 @@ export default function RootLayout({
     <html lang="fa" dir="rtl">
       <body>
         <header>
-          <h2>My B2B App</h2>
+          <h2>Admin Panel</h2>
 
           <nav>
             <Link href="/">خانه</Link>
