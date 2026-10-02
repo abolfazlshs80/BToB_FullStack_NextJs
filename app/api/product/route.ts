@@ -1,20 +1,11 @@
 import { NextResponse } from "next/server";
 
-export async function GET() {
-  const products = [
-    {
-      id: 1,
-      name: "Laptop",
-    },
-    {
-      id: 2,
-      name: "Mouse",
-    },
-  ];
+import prisma from "@/lib/prisma";
 
-  return NextResponse.json(products,{
-    status:202
-  });
+export async function GET() {
+  const products = await prisma.product.findMany();
+
+  return NextResponse.json(products);
 }
 
 export async function POST() {
