@@ -18,6 +18,7 @@ export type ProductDto = {
   id: number;
   name: string;
   price: number;
+  status: boolean;
   createdAt: Date;
 };
 

@@ -34,6 +34,7 @@ export async function getProducts(
   return products.map((product) => ({
     id: product.id,
     name: product.name,
+      status: product.status,
     price: Number(product.price),
     createdAt: product.createdAt,
   }));
@@ -53,6 +54,7 @@ export async function getProductById(id: number): Promise<ProductDto | null> {
   return {
     id: product.id,
     name: product.name,
+      status: product.status,
     price: Number(product.price),
     createdAt: product.createdAt,
   };
@@ -71,6 +73,7 @@ export async function createProduct(
   return {
     id: product.id,
     name: product.name,
+      status: product.status,
     price: Number(product.price),
     createdAt: product.createdAt,
   };
@@ -84,6 +87,7 @@ export async function updateProduct(
       id: dto.id,
     },
     data: {
+      
       name: dto.name,
       price: dto.price,
     },
@@ -92,6 +96,7 @@ export async function updateProduct(
   return {
     id: product.id,
     name: product.name,
+      status: product.status,
     price: Number(product.price),
     createdAt: product.createdAt,
   };
@@ -116,6 +121,7 @@ export async function patchProduct(dto: PatchProductDto): Promise<ProductDto> {
   return {
     id: product.id,
     name: product.name,
+      status: product.status,
     price: Number(product.price),
     createdAt: product.createdAt,
   };
@@ -125,6 +131,31 @@ export async function deleteProduct(id: number) {
   return prisma.product.delete({
     where: {
       id,
+    },
+  });
+}
+
+export async function toggleProductStatus(id: number) {
+  const product = await prisma.product.findUnique({
+    where: { id },
+    select: {
+      id: true,
+      status: true,
+    },
+  });
+
+  if (!product) {
+    throw new Error("محصول پیدا نشد");
+  }
+
+  return prisma.product.update({
+    where: { id },
+    data: {
+      status: !product.status,
+    },
+    select: {
+      id: true,
+      status: true,
     },
   });
 }

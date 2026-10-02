@@ -27,6 +27,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { DeleteProductButton } from "@/components/admin/products/delete-product-button";
+import { ToggleProductStatusButton } from "@/components/admin/products/toggle-product-status-button";
 
 export default async function ProductsPage({
   searchParams,
@@ -114,7 +115,9 @@ export default async function ProductsPage({
                     </TableCell>
 
                     <TableCell>
-                      <Badge variant="secondary">فعال</Badge>
+                      <Badge variant={product.status ? "default" : "secondary"}>
+                        {product.status ? "فعال" : "غیرفعال"}
+                      </Badge>
                     </TableCell>
 
                     <TableCell>
@@ -132,6 +135,12 @@ export default async function ProductsPage({
                               ویرایش
                             </Link>
                           </DropdownMenuItem>
+                          <TableCell>
+                            <ToggleProductStatusButton
+                              productId={product.id}
+                              status={product.status}
+                            />
+                          </TableCell>
 
                           <DropdownMenuItem>
                             <DeleteProductButton productId={product.id} />
