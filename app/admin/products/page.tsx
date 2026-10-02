@@ -15,7 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
+import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Plus, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 import Link from "next/link";
@@ -28,25 +28,49 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { DeleteProductButton } from "@/components/admin/products/delete-product-button";
 
-export default async function ProductsPage() {
-  const products = await getProducts();
+export default async function ProductsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{
+    search?: string;
+  }>;
+}) {
+  const params = await searchParams;
+
+  const products = await getProducts({
+    search: params.search,
+    price: undefined,
+    page: undefined,
+    pageSize: undefined,
+  });
 
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">محصولات</h1>
+          <CardTitle>لیست محصولات</CardTitle>
 
-          <p className="text-muted-foreground">مدیریت محصولات فروشگاه</p>
+          <CardDescription>
+            {products.length} محصول ثبت شده است.
+          </CardDescription>
         </div>
-
         <Link href="/admin/products/create">
           <Button>
             <Plus className="ml-2 size-4" />
             افزودن محصول
           </Button>
         </Link>
+
+        <form method="GET" className="flex items-center gap-2">
+          <Input
+            name="search"
+            placeholder="جستجوی محصول..."
+            defaultValue={params.search ?? ""}
+          />
+
+          <Button type="submit">جستجو</Button>
+        </form>
       </div>
 
       {/* Products Card */}

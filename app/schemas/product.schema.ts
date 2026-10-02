@@ -10,3 +10,17 @@ export const createProductSchema = z.object({
 });
 
 export type CreateProductInput = z.infer<typeof createProductSchema>;
+
+
+export const updateProductSchema = z.object({
+  id: z.number().int().positive(),
+
+  name: z
+    .string()
+    .min(2, "نام محصول حداقل ۲ کاراکتر باشد")
+    .max(100, "نام محصول بیش از حد طولانی است"),
+
+  price: z
+    .number()
+    .positive("قیمت باید بیشتر از صفر باشد"),
+});
