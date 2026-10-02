@@ -1,20 +1,18 @@
-import Image from "next/image";
-import Home1 from "./home";
-
-import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function Home() {
   return (
-    <main>
-      <h1>داشبورد B2B</h1>
+    <main className="flex min-h-screen items-center justify-center">
+      <Card className="w-[350px]">
+        <CardHeader>
+          <CardTitle>Next Shop</CardTitle>
+        </CardHeader>
 
-      <nav>
-        <Link href="/products">محصولات</Link>
-
-        <Link href="/users">کاربران</Link>
-
-        <Link href="/reports">گزارشات</Link>
-      </nav>
+        <CardContent>
+          <Button className="w-full">ورود به پنل</Button>
+        </CardContent>
+      </Card>
     </main>
   );
 }

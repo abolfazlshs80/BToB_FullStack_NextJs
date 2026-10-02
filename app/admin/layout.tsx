@@ -1,29 +1,25 @@
-import Link from "next/link";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+
+import { AdminSidebar } from "@/components/admin/admin-sidebar";
 
 export default function AdminLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="fa" dir="rtl">
-      <body>
-        <header>
-          <h2>Admin Panel</h2>
+    <SidebarProvider>
+      <AdminSidebar />
 
-          <nav>
-            <Link href="/">خانه</Link>
-            {" | "}
-            <Link href="/products">محصولات</Link>
-            {" | "}
-            <Link href="/users">کاربران</Link>
-            {" | "}
-            <Link href="/reports">گزارشات</Link>
-          </nav>
+      <div className="flex min-h-screen w-full flex-col">
+        <header className="flex h-16 items-center border-b px-4">
+          <SidebarTrigger />
+
+          <div className="mr-4 font-semibold">پنل مدیریت</div>
         </header>
 
-        <main>{children}</main>
-      </body>
-    </html>
+        <main className="flex-1 bg-muted/40 p-6">{children}</main>
+      </div>
+    </SidebarProvider>
   );
 }
