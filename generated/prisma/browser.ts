@@ -27,3 +27,23 @@ export type Product = Prisma.ProductModel
  * 
  */
 export type Category = Prisma.CategoryModel
+/**
+ * Model User
+ * 
+ */
+export type User = Prisma.UserModel
+/**
+ * Model Role
+ * 
+ */
+export type Role = Prisma.RoleModel
+/**
+ * Model UserRole
+ * 
+ */
+export type UserRole = Prisma.UserRoleModel
+/**
+ * Model Session
+ * 
+ */
+export type Session = Prisma.SessionModel
