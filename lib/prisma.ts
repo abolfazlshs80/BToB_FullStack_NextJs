@@ -1,5 +1,5 @@
 import { PrismaMssql } from "@prisma/adapter-mssql";
-import { PrismaClient } from "@/generated/prisma/client";
+import { PrismaClient } from "@/prisma/generated/prisma/client";
 
 const adapter = new PrismaMssql({
   server: "db71273.public.databaseasp.net",
