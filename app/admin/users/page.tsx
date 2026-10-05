@@ -153,15 +153,16 @@ export default async function UsersPage({
                     {/* Actions */}
                     <TableCell>
                       <DropdownMenu>
-                        <DropdownMenuTrigger>
-                          <Button variant="ghost" size="icon">
-                            <MoreHorizontal className="size-4" />
-                          </Button>
+                        <DropdownMenuTrigger className="inline-flex size-9 items-center justify-center rounded-md hover:bg-muted">
+                          <MoreHorizontal className="size-4" />
                         </DropdownMenuTrigger>
 
                         <DropdownMenuContent align="end">
                           <DropdownMenuItem>
-                            <Link href={`/admin/users/${user.id}/edit`}>
+                            <Link
+                              href={`/admin/users/${user.id}/edit`}
+                              className="flex w-full items-center"
+                            >
                               <Pencil className="ml-2 size-4" />
                               ویرایش
                             </Link>

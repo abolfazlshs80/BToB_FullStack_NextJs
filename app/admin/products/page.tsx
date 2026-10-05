@@ -15,17 +15,22 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Plus, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
+import { Plus, MoreHorizontal, Pencil } from "lucide-react";
+
 import Link from "next/link";
+
 import { getProducts } from "@/app/services/product.service";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
 import { DeleteProductButton } from "@/components/admin/products/delete-product-button";
 import { ToggleProductStatusButton } from "@/components/admin/products/toggle-product-status-button";
 
@@ -56,22 +61,25 @@ export default async function ProductsPage({
             {products.length} محصول ثبت شده است.
           </CardDescription>
         </div>
-        <Link href="/admin/products/create">
-          <Button>
-            <Plus className="ml-2 size-4" />
-            افزودن محصول
-          </Button>
-        </Link>
 
-        <form method="GET" className="flex items-center gap-2">
-          <Input
-            name="search"
-            placeholder="جستجوی محصول..."
-            defaultValue={params.search ?? ""}
-          />
+        <div className="flex items-center gap-2">
+          <form method="GET" className="flex items-center gap-2">
+            <Input
+              name="search"
+              placeholder="جستجوی محصول..."
+              defaultValue={params.search ?? ""}
+            />
 
-          <Button type="submit">جستجو</Button>
-        </form>
+            <Button type="submit">جستجو</Button>
+          </form>
+
+          <Link href="/admin/products/create">
+            <Button>
+              <Plus className="ml-2 size-4" />
+              افزودن محصول
+            </Button>
+          </Link>
+        </div>
       </div>
 
       {/* Products Card */}
@@ -120,28 +128,34 @@ export default async function ProductsPage({
                       </Badge>
                     </TableCell>
 
+                    {/* Actions */}
                     <TableCell>
                       <DropdownMenu>
-                        <DropdownMenuTrigger>
-                          <Button variant="ghost" size="icon">
-                            <MoreHorizontal className="size-4" />
-                          </Button>
+                        <DropdownMenuTrigger className="inline-flex size-9 items-center justify-center rounded-md hover:bg-muted">
+                          <MoreHorizontal className="size-4" />
                         </DropdownMenuTrigger>
 
                         <DropdownMenuContent align="end">
+                          {/* Edit */}
                           <DropdownMenuItem>
-                            <Link href={`/admin/products/${product.id}/edit`}>
+                            <Link
+                              href={`/admin/products/${product.id}/edit`}
+                              className="flex w-full items-center"
+                            >
                               <Pencil className="ml-2 size-4" />
                               ویرایش
                             </Link>
                           </DropdownMenuItem>
-                          <TableCell>
+
+                          {/* Toggle Status */}
+                          <DropdownMenuItem>
                             <ToggleProductStatusButton
                               productId={product.id}
                               status={product.status}
                             />
-                          </TableCell>
+                          </DropdownMenuItem>
 
+                          {/* Delete */}
                           <DropdownMenuItem>
                             <DeleteProductButton productId={product.id} />
                           </DropdownMenuItem>
