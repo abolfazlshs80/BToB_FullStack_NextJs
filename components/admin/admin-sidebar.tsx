@@ -26,6 +26,11 @@ const items = [
     icon: LayoutDashboard,
   },
   {
+    title: "شرکت",
+    url: "/admin/companies",
+    icon: Package,
+  },
+  {
     title: "محصولات",
     url: "/admin/products",
     icon: Package,
