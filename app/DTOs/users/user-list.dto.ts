@@ -6,3 +6,8 @@ export type UserListDto = {
   roles: RoleName[];
   createdAt: Date;
 };
+export type UserQueryDto = {
+  search: string | undefined;
+  pageSize: number | undefined;
+  page: number | undefined;
+};

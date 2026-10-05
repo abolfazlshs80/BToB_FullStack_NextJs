@@ -7,6 +7,14 @@ import {
 } from "@/components/ui/card";
 
 import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+import {
   Table,
   TableBody,
   TableCell,
@@ -30,9 +38,31 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Input } from "@base-ui/react";
+import { createPageUrl } from "@/lib/utils/createPageUrl";
+import { DataPagination } from "@/components/common/data-pagination";
 
-export default async function UsersPage() {
-  const users = await getUsers();
+export default async function UsersPage({
+  searchParams,
+}: {
+  searchParams: Promise<{
+    search?: string;
+    page?: string;
+    pageSize?: string;
+  }>;
+}) {
+  const params = await searchParams;
+
+  const page = Math.max(Number(params.page ?? "1") || 1, 1);
+  const pageSize = Math.max(Number(params.pageSize ?? "2") || 2, 1);
+
+  const result = await getUsers({
+    search: params.search,
+    page,
+    pageSize: pageSize,
+  });
+
+  const { users, totalCount, totalPages } = result;
 
   return (
     <div className="space-y-6">
@@ -41,7 +71,7 @@ export default async function UsersPage() {
         <div>
           <CardTitle>لیست کاربران</CardTitle>
 
-          <CardDescription>{users.length} کاربر ثبت شده است.</CardDescription>
+          <CardDescription>{totalCount} کاربر ثبت شده است.</CardDescription>
         </div>
 
         <Link href="/admin/users/create">
@@ -52,6 +82,15 @@ export default async function UsersPage() {
         </Link>
       </div>
 
+      <form method="GET" className="flex items-center gap-2">
+        <Input
+          name="search"
+          placeholder="جستجوی محصول..."
+          defaultValue={params.search ?? ""}
+        />
+
+        <Button type="submit">جستجو</Button>
+      </form>
       {/* Users Card */}
       <Card>
         <CardHeader>
@@ -147,6 +186,14 @@ export default async function UsersPage() {
               </TableBody>
             </Table>
           </div>
+
+          <DataPagination
+            pathname="/admin/users"
+            page={page}
+            totalPages={totalPages}
+            pageSize={pageSize}
+            search={params.search}
+          />
         </CardContent>
       </Card>
     </div>

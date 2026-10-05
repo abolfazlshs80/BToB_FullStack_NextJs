@@ -1,34 +1,65 @@
 import prisma from "@/lib/prisma";
 import { isRoleName } from "@/lib/roles";
-import { UserListDto } from "../DTOs/users/user-list.dto";
+import { UserListDto, UserQueryDto } from "../DTOs/users/user-list.dto";
 import bcrypt from "bcryptjs";
 import { CreateUserDto } from "../DTOs/users/create-user.dto";
 import { UpdateUserDto } from "../DTOs/users/update-user.dto";
 
-export async function getUsers(): Promise<UserListDto[]> {
-  const users = await prisma.user.findMany({
-    orderBy: {
-      id: "desc",
-    },
-    include: {
-      userRoles: {
-        include: {
-          role: true,
+export async function getUsers(query: UserQueryDto) {
+  const page = query.page ?? 1;
+  const pageSize = query.pageSize ?? 10;
+
+  const search = query.search?.trim();
+
+  const where = search
+    ? {
+        username: {
+          contains: search,
+        },
+      }
+    : undefined;
+
+  const [users, totalCount] = await prisma.$transaction([
+    prisma.user.findMany({
+      where,
+
+      orderBy: {
+        id: "desc",
+      },
+      skip: (page - 1) * pageSize,
+      take: pageSize,
+      include: {
+        userRoles: {
+          include: {
+            role: true,
+          },
         },
       },
-    },
-  });
+    }),
 
-  return users.map((user) => ({
-    id: user.id,
-    username: user.username,
-    roles: user.userRoles
-      .map((userRole) => userRole.role.name)
-      .filter(isRoleName),
-    createdAt: user.createdAt,
-  }));
+    prisma.user.count({
+      where,
+    }),
+  ]);
+
+  const totalPages = Math.ceil(totalCount / pageSize);
+
+  return {
+    users: users.map((user) => ({
+      id: user.id,
+      username: user.username,
+      roles: user.userRoles
+        .map((userRole) => userRole.role.name)
+        .filter(isRoleName),
+      createdAt: user.createdAt,
+    })),
+
+    totalCount,
+    page,
+    pageSize,
+    totalPages,
+  };
 }
-
 export async function createUser(data: CreateUserDto) {
   const existingUser = await prisma.user.findUnique({
     where: {
