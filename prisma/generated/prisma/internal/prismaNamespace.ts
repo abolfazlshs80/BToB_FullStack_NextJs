@@ -1266,6 +1266,7 @@ export type CustomerScalarFieldEnum = (typeof CustomerScalarFieldEnum)[keyof typ
 export const OrderScalarFieldEnum = {
   id: 'id',
   customerId: 'customerId',
+  name: 'name',
   status: 'status',
   totalPrice: 'totalPrice',
   createdAt: 'createdAt'

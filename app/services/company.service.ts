@@ -36,7 +36,7 @@ export async function getCompanys(
     status: company.status,
     email: company.email,
     phone: company.phone,
-    customers:[],
+    customers: [],
     createdAt: company.createdAt,
   }));
 }
@@ -47,14 +47,18 @@ export async function getCompanyById(id: number): Promise<CompanyDto | null> {
       id,
     },
     include: {
-      customers: true,
+      customers: {
+        include: {
+          orders: true,
+        },
+      },
     },
   });
 
   if (!company) {
     return null;
   }
-  console.log(company);
+
   return {
     id: company.id,
     name: company.name,
@@ -62,6 +66,7 @@ export async function getCompanyById(id: number): Promise<CompanyDto | null> {
     email: company.email,
     status: company.status,
     createdAt: company.createdAt,
+
     customers: company.customers.map((customer) => ({
       id: customer.id,
       name: customer.name,
@@ -69,9 +74,18 @@ export async function getCompanyById(id: number): Promise<CompanyDto | null> {
       email: customer.email,
       createdAt: customer.createdAt,
     })),
+
+    orders: company.customers.flatMap((customer) =>
+      customer.orders.map((order) => ({
+        id: order.id,
+        name: customer.name,
+        totalPrice: Number(order.totalPrice),
+        status: order.status,
+        createdAt: order.createdAt,
+      })),
+    ),
   };
 }
-
 export async function createCompany(
   dto: CreateCompanyDto,
 ): Promise<CompanyDto> {
@@ -89,7 +103,7 @@ export async function createCompany(
     status: company.status,
     phone: company.phone,
     email: company.email,
-    customers:[],
+    customers: [],
 
     createdAt: company.createdAt,
   };
@@ -115,7 +129,7 @@ export async function updateCompany(
     status: company.status,
     phone: company.phone,
     email: company.email ?? "",
-    customers:[],
+    customers: [],
     createdAt: company.createdAt,
   };
 }

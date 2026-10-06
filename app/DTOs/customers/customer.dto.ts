@@ -1,3 +1,5 @@
+import { CustomerOrderDto } from "../orders/order.dto";
+
 export type CreateCustomerDto = {
   name: string;
   phone: string | null;
@@ -27,6 +29,7 @@ export type CompanyCustomerDto = {
   phone: string | null;
   email: string | null;
   createdAt: Date;
+
 };
 
 export type CustomerQueryDto = {
