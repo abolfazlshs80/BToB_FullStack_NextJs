@@ -1,29 +1,35 @@
-import { CompanyCustomerDto, CustomerDto } from "../customers/customer.dto";
-
-export type CreateCompanyDto = {
+export type CreateCustomerDto = {
   name: string;
   phone: string | null;
   email: string | null;
+  companyId: number | null;
 };
 
-export type UpdateCompanyDto = {
+export type UpdateCustomerDto = {
   id: number;
   name: string;
   phone: string | null;
   email: string | null;
 };
 
-export type CompanyDto = {
+export type CustomerDto = {
   id: number;
   name: string;
   phone: string | null;
   email: string | null;
-  status: boolean;
   createdAt: Date;
-  customers: CompanyCustomerDto[];
+  companyId: number | null;
 };
 
-export type CompanyQueryDto = {
+export type CompanyCustomerDto = {
+  id: number;
+  name: string;
+  phone: string | null;
+  email: string | null;
+  createdAt: Date;
+};
+
+export type CustomerQueryDto = {
   search: string | undefined;
   pageSize: number | undefined;
   page: number | undefined;

@@ -36,7 +36,7 @@ export async function getCompanys(
     status: company.status,
     email: company.email,
     phone: company.phone,
-
+    customers:[],
     createdAt: company.createdAt,
   }));
 }
@@ -46,12 +46,15 @@ export async function getCompanyById(id: number): Promise<CompanyDto | null> {
     where: {
       id,
     },
+    include: {
+      customers: true,
+    },
   });
 
   if (!company) {
     return null;
   }
-
+  console.log(company);
   return {
     id: company.id,
     name: company.name,
@@ -59,6 +62,13 @@ export async function getCompanyById(id: number): Promise<CompanyDto | null> {
     email: company.email,
     status: company.status,
     createdAt: company.createdAt,
+    customers: company.customers.map((customer) => ({
+      id: customer.id,
+      name: customer.name,
+      phone: customer.phone,
+      email: customer.email,
+      createdAt: customer.createdAt,
+    })),
   };
 }
 
@@ -79,6 +89,7 @@ export async function createCompany(
     status: company.status,
     phone: company.phone,
     email: company.email,
+    customers:[],
 
     createdAt: company.createdAt,
   };
@@ -104,7 +115,7 @@ export async function updateCompany(
     status: company.status,
     phone: company.phone,
     email: company.email ?? "",
-
+    customers:[],
     createdAt: company.createdAt,
   };
 }
