@@ -90,7 +90,11 @@ export function CompanyOrders({
                   </TableCell>
 
                   <TableCell>
-                    <OrderActions order={order} companyId={companyId} />
+                    <OrderActions
+                      order={order}
+                      companyId={companyId}
+                      orderId={order.id}
+                    />
                   </TableCell>
                 </TableRow>
               ))}

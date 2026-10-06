@@ -11,25 +11,31 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { CompanyOrderDto } from "@/app/DTOs/orders/order.dto";
 import { DeleteOrderButton } from "./delete-company-order-button";
+import { EditOrderModal } from "./Update/order-update-customer-modal";
+import { ota } from "zod/locales";
 
 type OrderActionsProps = {
   companyId: number;
+  orderId: number;
+  
   order: CompanyOrderDto;
 };
 
-export function OrderActions({ companyId, order }: OrderActionsProps) {
+export function OrderActions({ companyId,orderId, order }: OrderActionsProps) {
   return (
     <>
-      {/* <EditOrderModal
+      <EditOrderModal
         companyId={companyId}
-        customerId={customer.id}
-        customer={{
-          id: customer.id,
-          name: customer.name,
-          phone: customer.phone,
-          email: customer.email,
+
+        orderId={orderId}
+        order={{
+          id: order.id,
+          status:order.status??"pendding",
+          name:order.name,
+      
         }}
-      /> */}
+    
+      />
       <DropdownMenu>
         <DropdownMenuTrigger className="inline-flex size-9 items-center justify-center rounded-md hover:bg-muted">
           <MoreHorizontal className="size-4" />

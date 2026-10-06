@@ -60,3 +60,22 @@ export async function deleteOrder(id: number) {
     },
   });
 }
+
+export async function updateOrder(
+  id: number,
+  data: {
+    name: string;
+
+    status: string;
+  },
+) {
+  return prisma.order.update({
+    where: {
+      id,
+    },
+    data: {
+      name: data.name,
+      status: data.status,
+    },
+  });
+}

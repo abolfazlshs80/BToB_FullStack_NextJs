@@ -39,7 +39,14 @@ export type CompanyOrderDto = {
   totalPrice: number | null;
   createdAt: Date;
   customerName: string | null;
+  customerId: number | null;
 };
+
+export interface UpdateOrderDto {
+  id: number;
+  status: string;
+  name: string;
+}
 
 // export type OrderQueryDto = {
 //   search: string | undefined;
