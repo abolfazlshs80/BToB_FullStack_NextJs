@@ -28,3 +28,8 @@ export type ProductQueryDto = {
   pageSize: number | undefined;
   page: number | undefined;
 };
+export type ProductSelectDto = {
+  id: number;
+  name: string;
+  price: number;
+};

@@ -4,6 +4,7 @@ import {
   PatchProductDto,
   ProductDto,
   ProductQueryDto,
+  ProductSelectDto,
   UpdateProductDto,
 } from "../DTOs/Products/product.dto";
 
@@ -34,7 +35,7 @@ export async function getProducts(
   return products.map((product) => ({
     id: product.id,
     name: product.name,
-      status: product.status,
+    status: product.status,
     price: Number(product.price),
     createdAt: product.createdAt,
   }));
@@ -54,7 +55,7 @@ export async function getProductById(id: number): Promise<ProductDto | null> {
   return {
     id: product.id,
     name: product.name,
-      status: product.status,
+    status: product.status,
     price: Number(product.price),
     createdAt: product.createdAt,
   };
@@ -73,7 +74,7 @@ export async function createProduct(
   return {
     id: product.id,
     name: product.name,
-      status: product.status,
+    status: product.status,
     price: Number(product.price),
     createdAt: product.createdAt,
   };
@@ -87,7 +88,6 @@ export async function updateProduct(
       id: dto.id,
     },
     data: {
-      
       name: dto.name,
       price: dto.price,
     },
@@ -96,7 +96,7 @@ export async function updateProduct(
   return {
     id: product.id,
     name: product.name,
-      status: product.status,
+    status: product.status,
     price: Number(product.price),
     createdAt: product.createdAt,
   };
@@ -121,7 +121,7 @@ export async function patchProduct(dto: PatchProductDto): Promise<ProductDto> {
   return {
     id: product.id,
     name: product.name,
-      status: product.status,
+    status: product.status,
     price: Number(product.price),
     createdAt: product.createdAt,
   };
@@ -158,4 +158,20 @@ export async function toggleProductStatus(id: number) {
       status: true,
     },
   });
+}
+export async function getProductsForOrder(): Promise<ProductSelectDto[]> {
+  const products = await prisma.product.findMany({
+    where: {
+      status: true,
+    },
+    orderBy: {
+      name: "asc",
+    },
+  });
+
+  return products.map((product) => ({
+    id: product.id,
+    name: product.name,
+    price: Number(product.price),
+  }));
 }

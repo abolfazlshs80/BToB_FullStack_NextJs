@@ -37,6 +37,7 @@ export async function getCompanys(
     email: company.email,
     phone: company.phone,
     customers: [],
+    orders: [],
     createdAt: company.createdAt,
   }));
 }
@@ -78,7 +79,8 @@ export async function getCompanyById(id: number): Promise<CompanyDto | null> {
     orders: company.customers.flatMap((customer) =>
       customer.orders.map((order) => ({
         id: order.id,
-        name: customer.name,
+        name: order.name,
+        customerName: customer.name,
         totalPrice: Number(order.totalPrice),
         status: order.status,
         createdAt: order.createdAt,
@@ -104,7 +106,7 @@ export async function createCompany(
     phone: company.phone,
     email: company.email,
     customers: [],
-
+    orders: [],
     createdAt: company.createdAt,
   };
 }
@@ -130,6 +132,7 @@ export async function updateCompany(
     phone: company.phone,
     email: company.email ?? "",
     customers: [],
+    orders: [],
     createdAt: company.createdAt,
   };
 }

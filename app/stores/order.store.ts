@@ -29,15 +29,9 @@ export const useOrderStore = create<OrderState>((set) => ({
 
   items: [],
 
-  setCustomerId: (customerId) =>
-    set({
-      customerId,
-    }),
+  setCustomerId: (customerId) => set({ customerId }),
 
-  setStatus: (status) =>
-    set({
-      status,
-    }),
+  setStatus: (status) => set({ status }),
 
   addItem: (item) =>
     set((state) => {
@@ -65,9 +59,7 @@ export const useOrderStore = create<OrderState>((set) => ({
 
   removeItem: (productId) =>
     set((state) => ({
-      items: state.items.filter(
-        (x) => x.productId !== productId,
-      ),
+      items: state.items.filter((x) => x.productId !== productId),
     })),
 
   updateQuantity: (productId, quantity) =>

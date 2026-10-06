@@ -113,7 +113,12 @@ export default async function CompanysPage({
                     <TableCell>{index + 1}</TableCell>
 
                     <TableCell className="font-medium">
-                      {company.name}
+                      <Link
+                        href={`/admin/companies/${company.id}`}
+                        className="font-medium hover:underline"
+                      >
+                        {company.name}
+                      </Link>
                     </TableCell>
 
                     <TableCell>{company.phone} </TableCell>

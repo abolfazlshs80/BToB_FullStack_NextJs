@@ -1,7 +1,9 @@
+import Link from "next/link";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
 import { Badge } from "@/components/ui/badge";
 import { CompanyDto } from "@/app/DTOs/companies/company.dto";
-
 
 type CompanyInfoProps = {
   company: CompanyDto;
@@ -19,7 +21,12 @@ export function CompanyInfo({ company }: CompanyInfoProps) {
           <div>
             <p className="text-sm text-muted-foreground">نام شرکت</p>
 
-            <p className="font-medium">{company.name}</p>
+            <Link
+              href={`/admin/companies/${company.id}`}
+              className="font-medium hover:underline"
+            >
+              {company.name}
+            </Link>
           </div>
 
           <div>
