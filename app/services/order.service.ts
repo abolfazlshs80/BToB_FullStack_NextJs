@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma";
-import { CreateOrderDto } from "../DTOs/orders/order.dto";
+import { CreateOrderDto, OrderSelectDto } from "../DTOs/orders/order.dto";
 
 export async function createOrder(data: CreateOrderDto) {
   return prisma.$transaction(async (tx) => {
@@ -78,4 +78,22 @@ export async function updateOrder(
       status: data.status,
     },
   });
+}
+
+export async function getPaymentsForOrder(): Promise<OrderSelectDto[]> {
+  const orders = await prisma.order.findMany({
+    include: {
+      customer: true,
+    },
+    orderBy: {
+      name: "asc",
+    },
+  });
+
+  return orders.map((order) => ({
+    id: order.id,
+    name: order.name,
+    customerName: order.customer.name,
+    totalPrice: Number(order.totalPrice),
+  }));
 }

@@ -34,7 +34,7 @@ export type CreateOrderDto = {
 
 export type CompanyOrderDto = {
   id: number;
-  name: string;
+  name: string | null;
   status: string | null;
   totalPrice: number | null;
   createdAt: Date;
@@ -47,7 +47,12 @@ export interface UpdateOrderDto {
   status: string;
   name: string;
 }
-
+export type OrderSelectDto = {
+  id: number;
+  customerName: string;
+  name: string | null;
+  totalPrice: number;
+};
 // export type OrderQueryDto = {
 //   search: string | undefined;
 //   pageSize: number | undefined;

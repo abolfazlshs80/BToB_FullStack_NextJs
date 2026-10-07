@@ -5,6 +5,8 @@ import { CompanyInfo } from "@/components/admin/companies/company-info";
 import { CompanyCustomers } from "@/components/admin/companies/customers/company-customers";
 import { CompanyOrders } from "@/components/admin/companies/orders/order-company";
 import { getProductsForOrder } from "@/app/services/product.service";
+import { CompanyPayments } from "@/components/admin/companies/payments/payment-company";
+import { getPaymentsForOrder } from "@/app/services/order.service";
 
 export default async function CompanyDetailsPage({
   params,
@@ -21,6 +23,7 @@ export default async function CompanyDetailsPage({
 
   const company = await getCompanyById(companyId);
   const products = await getProductsForOrder();
+  const orders = await getPaymentsForOrder();
 
   if (!company) {
     notFound();
@@ -37,6 +40,12 @@ export default async function CompanyDetailsPage({
         products={products}
         companyId={company.id}
         customers={company.customers}
+      />
+
+      <CompanyPayments
+        payments={company.payments}
+        companyId={company.id}
+        orders={company.orders}
       />
     </div>
   );

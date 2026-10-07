@@ -37,6 +37,7 @@ export async function getCompanys(
     email: company.email,
     phone: company.phone,
     customers: [],
+    payments: [],
     orders: [],
     createdAt: company.createdAt,
   }));
@@ -50,7 +51,11 @@ export async function getCompanyById(id: number): Promise<CompanyDto | null> {
     include: {
       customers: {
         include: {
-          orders: true,
+          orders: {
+            include: {
+              payments: true,
+            },
+          },
         },
       },
     },
@@ -80,11 +85,28 @@ export async function getCompanyById(id: number): Promise<CompanyDto | null> {
       customer.orders.map((order) => ({
         id: order.id,
         name: order.name,
+        customerId: order.customerId,
         customerName: customer.name,
         totalPrice: Number(order.totalPrice),
         status: order.status,
         createdAt: order.createdAt,
       })),
+    ),
+
+    payments: company.customers.flatMap((customer) =>
+      customer.orders.flatMap((order) =>
+        order.payments.map((payment) => ({
+          id: payment.id,
+          orderId: order.id,
+          orderName: order.name,
+          customerId: customer.id,
+          customerName: customer.name,
+          amount: Number(payment.amount),
+          status: payment.status,
+          method: payment.method,
+          createdAt: payment.createdAt,
+        })),
+      ),
     ),
   };
 }
@@ -107,6 +129,7 @@ export async function createCompany(
     email: company.email,
     customers: [],
     orders: [],
+    payments: [],
     createdAt: company.createdAt,
   };
 }
@@ -133,6 +156,7 @@ export async function updateCompany(
     email: company.email ?? "",
     customers: [],
     orders: [],
+    payments: [],
     createdAt: company.createdAt,
   };
 }

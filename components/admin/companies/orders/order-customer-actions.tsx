@@ -17,24 +17,21 @@ import { ota } from "zod/locales";
 type OrderActionsProps = {
   companyId: number;
   orderId: number;
-  
+
   order: CompanyOrderDto;
 };
 
-export function OrderActions({ companyId,orderId, order }: OrderActionsProps) {
+export function OrderActions({ companyId, orderId, order }: OrderActionsProps) {
   return (
     <>
       <EditOrderModal
         companyId={companyId}
-
         orderId={orderId}
         order={{
           id: order.id,
-          status:order.status??"pendding",
-          name:order.name,
-      
+          status: order.status ?? "pendding",
+          name: order.name ?? "نام تستی",
         }}
-    
       />
       <DropdownMenu>
         <DropdownMenuTrigger className="inline-flex size-9 items-center justify-center rounded-md hover:bg-muted">

@@ -1,5 +1,6 @@
 import { CompanyCustomerDto, CustomerDto } from "../customers/customer.dto";
-import { CustomerOrderDto } from "../orders/order.dto";
+import { CompanyOrderDto } from "../orders/order.dto";
+import { CompanyPaymentDto } from "../payments/payment.dto";
 
 export type CreateCompanyDto = {
   name: string;
@@ -22,7 +23,8 @@ export type CompanyDto = {
   status: boolean;
   createdAt: Date;
   customers: CompanyCustomerDto[];
-  orders: CustomerOrderDto[];
+  orders: CompanyOrderDto[];
+  payments: CompanyPaymentDto[];
 };
 
 export type CompanyQueryDto = {
