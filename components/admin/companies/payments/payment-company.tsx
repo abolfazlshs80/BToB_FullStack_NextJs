@@ -94,7 +94,7 @@ export function CompanyPayments({
                     <PaymentActions
                       payment={payment}
                       companyId={companyId}
-                      paymentId={payment.id}
+                      orders={orders}
                     />
                   </TableCell>
                 </TableRow>

@@ -16,3 +16,10 @@ export type CreateCompanyPaymentDto = {
   status: string;
   method: string;
 };
+export type UpdatePaymentDto = {
+  id: number;
+  orderId: number;
+  amount: number;
+  status: string;
+  method: string;
+};

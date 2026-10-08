@@ -2,6 +2,7 @@
 
 import { useTransition } from "react";
 import { Trash2 } from "lucide-react";
+
 import { deletePaymentAction } from "@/actions/companies/payments/company.payment.delete.actions";
 
 type Props = {
@@ -18,7 +19,9 @@ export function DeletePaymentButton({ paymentId, companyId }: Props) {
     if (!confirmed) return;
 
     startTransition(async () => {
-      await deletePaymentAction(paymentId, companyId);
+      const result = await deletePaymentAction(paymentId, companyId);
+
+      console.log(result);
     });
   }
 
@@ -27,9 +30,10 @@ export function DeletePaymentButton({ paymentId, companyId }: Props) {
       type="button"
       onClick={handleDelete}
       disabled={isPending}
-      className="flex w-full items-center gap-2 px-2 py-1.5 text-sm text-destructive"
+      className="flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-sm text-destructive hover:bg-muted"
     >
       <Trash2 className="size-4" />
+
       {isPending ? "در حال حذف..." : "حذف"}
     </button>
   );
