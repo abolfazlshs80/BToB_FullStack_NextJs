@@ -1,8 +1,5 @@
 "use client";
 
-import { useState } from "react";
-import { Pencil } from "lucide-react";
-
 import {
   Dialog,
   DialogContent,
@@ -11,8 +8,9 @@ import {
 } from "@/components/ui/dialog";
 
 import { CompanyPaymentDto } from "@/app/DTOs/payments/payment.dto";
-import { EditPaymentForm } from "./payment-update-company-form";
 import { CompanyOrderDto } from "@/app/DTOs/orders/order.dto";
+
+import { EditPaymentForm } from "./payment-update-company-form";
 
 type EditPaymentModalProps = {
   payment: CompanyPaymentDto;

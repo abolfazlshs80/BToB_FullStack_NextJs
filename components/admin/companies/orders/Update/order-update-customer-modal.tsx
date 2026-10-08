@@ -1,15 +1,12 @@
 "use client";
 
-import { Plus } from "lucide-react";
-
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
+
 import { UpdateOrderDto } from "@/app/DTOs/orders/order.dto";
 import { EditOrderForm } from "./order-update-Customer";
 
@@ -17,28 +14,31 @@ type EditOrderModalProps = {
   companyId: number;
   orderId: number;
   order: UpdateOrderDto;
+
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 };
 
 export function EditOrderModal({
   companyId,
   orderId,
   order,
+  open,
+  onOpenChange,
 }: EditOrderModalProps) {
   return (
-    <Dialog>
-      <DialogTrigger>
-        <Button>
-          <Plus className="ml-2 size-4" />
-          ویرایش فاکتور
-        </Button>
-      </DialogTrigger>
-
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>ویرایش فاکتور</DialogTitle>
         </DialogHeader>
 
-        <EditOrderForm companyId={companyId} order={order} orderId={orderId} />
+        <EditOrderForm
+          companyId={companyId}
+          orderId={orderId}
+          order={order}
+          onSuccess={() => onOpenChange(false)}
+        />
       </DialogContent>
     </Dialog>
   );

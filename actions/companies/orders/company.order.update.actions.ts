@@ -41,7 +41,7 @@ export async function updateOrderAction(
     });
 
     revalidatePath(`/admin/companies/${companyId}`);
-
+  revalidatePath(`/admin/companies/${companyId}`);
     return {
       success: true,
       values: {

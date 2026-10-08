@@ -1,15 +1,12 @@
 "use client";
 
-import { Plus } from "lucide-react";
-
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
+
 import { EditCustomerForm } from "./company-Edit-Customer";
 import { UpdateCustomerDto } from "@/app/DTOs/customers/customer.dto";
 
@@ -17,22 +14,20 @@ type EditCustomerModalProps = {
   companyId: number;
   customerId: number;
   customer: UpdateCustomerDto;
+
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 };
 
 export function EditCustomerModal({
   companyId,
   customerId,
   customer,
+  open,
+  onOpenChange,
 }: EditCustomerModalProps) {
   return (
-    <Dialog>
-      <DialogTrigger>
-        <Button>
-          <Plus className="ml-2 size-4" />
-          ویرایش مشتری
-        </Button>
-      </DialogTrigger>
-
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>ویرایش مشتری</DialogTitle>

@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useTransition } from "react";
-import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
+import { useState } from "react";
+import { MoreHorizontal, Pencil } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -12,9 +12,10 @@ import {
 
 import { CompanyPaymentDto } from "@/app/DTOs/payments/payment.dto";
 import { CompanyOrderDto } from "@/app/DTOs/orders/order.dto";
-import { EditPaymentModal } from "./Update/payment-update-company-modal";
 
-import { deletePaymentAction } from "@/actions/companies/payments/company.payment.delete.actions";
+import { EditPaymentModal } from "./Update/payment-update-company-modal";
+import { DeletePaymentButton } from "./delete-payment-company-button";
+
 
 type PaymentActionsProps = {
   payment: CompanyPaymentDto;
@@ -28,19 +29,6 @@ export function PaymentActions({
   orders,
 }: PaymentActionsProps) {
   const [open, setOpen] = useState(false);
-  const [isPending, startTransition] = useTransition();
-
-  function handleDelete() {
-    const confirmed = window.confirm("آیا از حذف این پرداخت مطمئن هستید؟");
-
-    if (!confirmed) return;
-
-    startTransition(async () => {
-      const result = await deletePaymentAction(payment.id, companyId);
-
-      console.log("DELETE RESULT:", result);
-    });
-  }
 
   return (
     <>
@@ -50,20 +38,17 @@ export function PaymentActions({
         </DropdownMenuTrigger>
 
         <DropdownMenuContent align="end">
+          {/* ویرایش */}
           <DropdownMenuItem onClick={() => setOpen(true)}>
             <Pencil className="ml-2 size-4" />
             ویرایش
           </DropdownMenuItem>
 
-          <DropdownMenuItem
-            onClick={handleDelete}
-            disabled={isPending}
-            className="text-destructive focus:text-destructive"
-          >
-            <Trash2 className="ml-2 size-4" />
-
-            {isPending ? "در حال حذف..." : "حذف"}
-          </DropdownMenuItem>
+          {/* حذف */}
+          <DeletePaymentButton
+            paymentId={payment.id}
+            companyId={companyId}
+          />
         </DropdownMenuContent>
       </DropdownMenu>
 

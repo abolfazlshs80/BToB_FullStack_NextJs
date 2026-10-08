@@ -21,8 +21,30 @@ type CustomerActionsProps = {
 };
 
 export function CustomerActions({ companyId, customer }: CustomerActionsProps) {
+  const [open, setOpen] = useState(false);
+
   return (
     <>
+      <DropdownMenu>
+        <DropdownMenuTrigger className="inline-flex size-9 items-center justify-center rounded-md hover:bg-muted">
+          <MoreHorizontal className="size-4" />
+        </DropdownMenuTrigger>
+
+        <DropdownMenuContent align="end">
+          {/* ویرایش */}
+          <DropdownMenuItem onClick={() => setOpen(true)}>
+            <Pencil className="ml-2 size-4" />
+            ویرایش
+          </DropdownMenuItem>
+
+          {/* حذف */}
+          <DeleteCustomerButton
+            companyId={companyId}
+            customerId={customer.id}
+          />
+        </DropdownMenuContent>
+      </DropdownMenu>
+
       <EditCustomerModal
         companyId={companyId}
         customerId={customer.id}
@@ -32,41 +54,9 @@ export function CustomerActions({ companyId, customer }: CustomerActionsProps) {
           phone: customer.phone,
           email: customer.email,
         }}
+        open={open}
+        onOpenChange={setOpen}
       />
-      <DropdownMenu>
-        <DropdownMenuTrigger className="inline-flex size-9 items-center justify-center rounded-md hover:bg-muted">
-          <MoreHorizontal className="size-4" />
-        </DropdownMenuTrigger>
-
-        <DropdownMenuContent align="end">
-          {/* Edit */}
-          <DropdownMenuItem>
-            {/* <Link
-                              href={`/admin/companies/${companyId}/edit/${customer.id}`}
-                              className="flex w-full items-center"
-                            >
-                              <Pencil className="ml-2 size-4" />
-                              ویرایش
-                            </Link> */}
-          </DropdownMenuItem>
-
-          {/* Toggle Status */}
-          {/* <DropdownMenuItem>
-                            <ToggleCompanyStatusButton
-                              companyId={company.id}
-                              status={company.status}
-                            />
-                          </DropdownMenuItem> */}
-
-          {/* Delete */}
-          <DropdownMenuItem>
-            <DeleteCustomerButton
-              companyId={companyId}
-              customerId={customer.id}
-            />
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
     </>
   );
 }

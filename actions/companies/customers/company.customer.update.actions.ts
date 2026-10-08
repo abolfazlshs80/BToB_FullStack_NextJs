@@ -76,4 +76,8 @@ export async function updateCustomerAction(
   revalidatePath(`/admin/companies/${result.data.companyId}`);
 
   redirect(`/admin/companies/${result.data.companyId}`);
+
+  return {
+    success: true,
+  };
 }
