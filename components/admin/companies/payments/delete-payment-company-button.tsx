@@ -25,8 +25,6 @@ export function DeletePaymentButton({ paymentId, companyId }: Props) {
 
       if (result.success) {
         router.refresh();
-      } else {
-        console.error(result.error);
       }
     });
   }
