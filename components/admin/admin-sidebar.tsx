@@ -51,6 +51,11 @@ const items = [
     icon: Users,
   },
   {
+    title: "گزارشات فاکتور",
+    url: "/admin/reports/order",
+    icon: Users,
+  },
+  {
     title: "تنظیمات",
     url: "/admin/settings",
     icon: Settings,
