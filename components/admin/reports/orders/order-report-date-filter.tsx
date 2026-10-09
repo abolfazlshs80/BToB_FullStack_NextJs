@@ -1,4 +1,3 @@
-
 "use client";
 
 import DatePicker from "react-multi-date-picker";
@@ -10,19 +9,11 @@ type Props = {
   toDate?: string;
 };
 
-export function OrderReportDateFilter({
-  fromDate,
-  toDate,
-}: Props) {
+export function OrderReportDateFilter({ fromDate, toDate }: Props) {
   return (
-    <form
-      method="GET"
-      className="flex flex-wrap items-end gap-4"
-    >
+    <div>
       <div className="space-y-2">
-        <label className="block text-sm font-medium">
-          از تاریخ
-        </label>
+        <label className="block text-sm font-medium">از تاریخ</label>
 
         <DatePicker
           calendar={persian}
@@ -37,9 +28,7 @@ export function OrderReportDateFilter({
       </div>
 
       <div className="space-y-2">
-        <label className="block text-sm font-medium">
-          تا تاریخ
-        </label>
+        <label className="block text-sm font-medium">تا تاریخ</label>
 
         <DatePicker
           calendar={persian}
@@ -52,13 +41,6 @@ export function OrderReportDateFilter({
           placeholder="تاریخ پایان"
         />
       </div>
-
-      <button
-        type="submit"
-        className="h-10 rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground"
-      >
-        اعمال فیلتر
-      </button>
-    </form>
+    </div>
   );
 }

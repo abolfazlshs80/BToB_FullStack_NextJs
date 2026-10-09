@@ -17,7 +17,7 @@ export async function getOrderReport(
   const fromDate = filters?.fromDate ?? null;
 
   const toDate = filters?.toDate ?? null;
-
+  console.log(toDate);
   const result = await prisma.$queryRaw<OrderReportDto[]>`
     SELECT
         o.id AS orderId,

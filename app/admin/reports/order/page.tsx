@@ -15,6 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { jalaliToGregorianDate } from "@/lib/utils/date";
 
 type OrdersReportPageProps = {
   searchParams: Promise<{
@@ -34,8 +35,10 @@ export default async function OrdersReportPage({
 
   const search = params.search || undefined;
   const status = params.status || undefined;
-  const fromDate = params.fromDate;
-  const toDate = params.toDate;
+
+  const fromDate = jalaliToGregorianDate(params.fromDate);
+  const toDate = jalaliToGregorianDate(params.toDate, true);
+
   const companyId = params.companyId ? Number(params.companyId) : undefined;
 
   const [companies, orders, monthlyReport] = await Promise.all([
@@ -44,10 +47,11 @@ export default async function OrdersReportPage({
       search,
       status,
       companyId,
+      fromDate,
+      toDate,
     }),
     getMonthlyOrderReport(),
   ]);
-
   const totalOrders = orders.length;
 
   const totalSales = orders.reduce((sum, order) => sum + order.orderTotal, 0);
@@ -129,7 +133,7 @@ export default async function OrdersReportPage({
                 ))}
               </select>
             </div>
-            <OrderReportDateFilter fromDate={params.fromDate} toDate={toDate} />
+            <OrderReportDateFilter fromDate={fromDate} toDate={toDate} />
             <div className="flex items-end">
               <button
                 type="submit"
