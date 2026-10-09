@@ -19,6 +19,7 @@ export type OrderReportDto = {
 export type OrderReportFilterDto = {
   search?: string;
   status?: string;
+
   companyId?: number;
   fromDate?: Date;
   toDate?: Date;

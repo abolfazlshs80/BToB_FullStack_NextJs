@@ -1,8 +1,10 @@
+import { getCompaniesForSelect } from "@/app/services/company.service";
 import {
   getMonthlyOrderReport,
   getOrderReport,
 } from "@/app/services/reports/report.order.service";
 import { OrderReportCharts } from "@/components/admin/reports/orders/charts/order-report-charts";
+import { OrderReportDateFilter } from "@/components/admin/reports/orders/order-report-date-filter";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import {
@@ -17,7 +19,10 @@ import {
 type OrdersReportPageProps = {
   searchParams: Promise<{
     search?: string;
+    toDate?: string;
+    fromDate?: string;
     status?: string;
+
     companyId?: string;
   }>;
 };
@@ -29,10 +34,12 @@ export default async function OrdersReportPage({
 
   const search = params.search || undefined;
   const status = params.status || undefined;
-
+  const fromDate = params.fromDate;
+  const toDate = params.toDate;
   const companyId = params.companyId ? Number(params.companyId) : undefined;
 
-  const [orders, monthlyReport] = await Promise.all([
+  const [companies, orders, monthlyReport] = await Promise.all([
+    getCompaniesForSelect(),
     getOrderReport({
       search,
       status,
@@ -104,19 +111,25 @@ export default async function OrdersReportPage({
 
             <div className="space-y-2">
               <label htmlFor="companyId" className="text-sm font-medium">
-                شناسه شرکت
+                شرکت
               </label>
 
-              <input
+              <select
                 id="companyId"
                 name="companyId"
-                type="number"
-                defaultValue={companyId ?? ""}
-                placeholder="مثلاً 2"
+                defaultValue={companyId?.toString() ?? ""}
                 className="h-10 w-full rounded-md border bg-background px-3 text-sm"
-              />
-            </div>
+              >
+                <option value="">همه شرکت‌ها</option>
 
+                {companies.map((company) => (
+                  <option key={company.id} value={company.id}>
+                    {company.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <OrderReportDateFilter fromDate={params.fromDate} toDate={toDate} />
             <div className="flex items-end">
               <button
                 type="submit"

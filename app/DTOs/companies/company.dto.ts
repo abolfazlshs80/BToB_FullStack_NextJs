@@ -32,3 +32,9 @@ export type CompanyQueryDto = {
   pageSize: number | undefined;
   page: number | undefined;
 };
+
+
+export type CompanySelectDto = {
+  id: number;
+  name: string;
+};

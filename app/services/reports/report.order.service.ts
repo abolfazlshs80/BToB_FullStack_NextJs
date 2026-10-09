@@ -1,13 +1,14 @@
-import { MonthlyOrderReportDto, OrderReportDto, OrderReportFilterDto } from "@/app/DTOs/reports/orders/order-report.dto";
+import {
+  MonthlyOrderReportDto,
+  OrderReportDto,
+  OrderReportFilterDto,
+} from "@/app/DTOs/reports/orders/order-report.dto";
 import prisma from "@/lib/prisma";
-
 
 export async function getOrderReport(
   filters?: OrderReportFilterDto,
 ): Promise<OrderReportDto[]> {
-  const search = filters?.search
-    ? `%${filters.search}%`
-    : null;
+  const search = filters?.search ? `%${filters.search}%` : null;
 
   const status = filters?.status || null;
 
@@ -106,8 +107,6 @@ export async function getOrderReport(
     createdAt: order.createdAt,
   }));
 }
-
-
 
 export async function getMonthlyOrderReport(): Promise<
   MonthlyOrderReportDto[]

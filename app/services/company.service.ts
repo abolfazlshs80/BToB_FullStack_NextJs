@@ -2,6 +2,7 @@ import prisma from "@/lib/prisma";
 import {
   CompanyDto,
   CompanyQueryDto,
+  CompanySelectDto,
   CreateCompanyDto,
   UpdateCompanyDto,
 } from "../DTOs/companies/company.dto";
@@ -215,6 +216,21 @@ export async function toggleCompanyStatus(id: number) {
     select: {
       id: true,
       status: true,
+    },
+  });
+}
+
+export async function getCompaniesForSelect(): Promise<CompanySelectDto[]> {
+  return prisma.company.findMany({
+    where: {
+      status: true,
+    },
+    select: {
+      id: true,
+      name: true,
+    },
+    orderBy: {
+      name: "asc",
     },
   });
 }
